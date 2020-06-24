@@ -1,4 +1,4 @@
-require('dotenv').config({path: './src/.config'});
+require('dotenv').config({ path: './src/.config' });
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 app.use('/:id', (req, res, next) => {
   res.status(200).json({
     message: 'Hello world!',
-    id: req.params.id
+    id: req.params.id,
   });
 });
 
-console.log(`Server started! on port ${process.env.PORT}!`);
+console.log(`Server started on port ${process.env.PORT}!`);
 
 app.listen(3000);
