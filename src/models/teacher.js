@@ -6,11 +6,11 @@ const teacherSchema = new Schema({
     type: String,
     required: true,
   },
-  subjects: [
+  lessons: [
     {
       type: mongoose.Types.ObjectId,
       required: true,
-      ref: 'Subject',
+      ref: 'Lesson',
     },
   ],
 });
