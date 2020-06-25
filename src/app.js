@@ -39,8 +39,9 @@ if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_PASS) {
 
 const startServer = async () => {
   await DBConnect();
-  app.listen(process.env.PORT || 3000);
-  console.log(`Server started on port ${process.env.PORT}!`);
+  app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server started on port ${process.env.PORT}!`);
+  });
 };
 
 startServer();
