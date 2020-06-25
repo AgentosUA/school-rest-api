@@ -5,5 +5,6 @@ const teachersController = require('../../controllers/teachers');
 
 router.get('/', teachersController.getAllTeachers);
 router.post('/', [body('name').notEmpty()],teachersController.postNewTeacher);
+router.delete('/', [body('id').notEmpty()],teachersController.deleteTeacher);
 
 module.exports = router;

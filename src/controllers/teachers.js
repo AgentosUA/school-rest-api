@@ -44,12 +44,47 @@ exports.postNewTeacher = async (req, res) => {
 
   try {
     await teacher.save();
-    res.status(200).json({
+    res.status(201).json({
       message: 'Teacher created successfully!',
       error: false,
-      status: 200,
+      status: 201,
     });
   } catch (error) {
+    res.status(500).json({
+      error: 'Something went wront on the server!',
+      status: 500,
+    });
+  }
+};
+
+exports.deleteTeacher = async (req, res) => {
+  const { id } = req.body;
+  const validErrors = validationResult(req);
+
+  if (!validErrors.isEmpty()) {
+    return res.status(400).json({
+      error: 'Some fields are empty!',
+      status: 400,
+    });
+  }
+
+  try {
+    const teacher = await Teacher.findById(id);
+    if (teacher.length < 1) {
+      return res.status(404).json({
+        error: 'Teacher not found',
+        status: 404,
+      });
+    }
+
+    await teacher.remove();
+    res.status(201).json({
+      message: 'Teacher was deleted!',
+      error: false,
+      status: 201,
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       error: 'Something went wront on the server!',
       status: 500,
