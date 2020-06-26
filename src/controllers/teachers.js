@@ -70,7 +70,7 @@ exports.deleteTeacher = async (req, res) => {
 
   try {
     const teacher = await Teacher.findById(id);
-    if (teacher.length < 1) {
+    if (!teacher) {
       return res.status(404).json({
         error: 'Teacher not found',
         status: 404,
