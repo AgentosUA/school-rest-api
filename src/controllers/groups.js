@@ -36,6 +36,14 @@ exports.postNewGroup = async (req, res) => {
     });
   }
 
+  const isGroupExists = await Group.findOne({ title });
+  if (isGroupExists) {
+    return res.status(403).json({
+      error: 'Group already exists!',
+      status: 403,
+    });
+  }
+
   const group = new Group({
     title,
     lessons: [],
