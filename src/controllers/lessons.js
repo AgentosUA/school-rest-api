@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const Lesson = require('../models/teacher');
+const Lesson = require('../models/lesson');
 
 const { validationResult } = require('express-validator');
 
 exports.getAllLessons = async (req, res) => {
   try {
     const lessons = await Lesson.find();
-    if (lessons.length < 1) {
+    if (!lessons) {
       return res.status(404).json({
         error: 'No lessons found',
         status: 404,
@@ -15,7 +15,7 @@ exports.getAllLessons = async (req, res) => {
     res.status(200).json({
       lessons,
       error: true,
-      status: 404,
+      status: 200,
     });
   } catch (error) {
     console.log(error);
