@@ -46,6 +46,7 @@ exports.postNewGroup = async (req, res) => {
 
   const group = new Group({
     title,
+    students: [],
     lessons: [],
   });
 
