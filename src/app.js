@@ -9,6 +9,9 @@ const DBConnect = require('./db/db');
 // Import routes:
 
 const teachersRoutes = require('./routes/teachers/teachers');
+const lessonsRoutes = require('./routes/lessons/lessons');
+const groupRoutes = require('./routes/groups/groups');
+const errorRouter = require('./routes/index');
 
 // Configuration:
 app.use(morgan('dev'));
@@ -31,6 +34,11 @@ app.use((req, res, next) => {
 
 // Routes:
 app.use('/teachers', teachersRoutes);
+app.use('/lessons', lessonsRoutes);
+app.use('/groups', groupRoutes);
+app.use('/', errorRouter.showError);
+
+// Server start:
 
 if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_PASS) {
   console.log('Forgot to add .config file!');
