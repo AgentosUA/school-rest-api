@@ -39,7 +39,7 @@ exports.postNewTeacher = async (req, res) => {
 
   const teacher = new Teacher({
     name,
-    subjects: [],
+    lessons: [],
   });
 
   try {
@@ -50,6 +50,7 @@ exports.postNewTeacher = async (req, res) => {
       status: 201,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       error: 'Something went wront on the server!',
       status: 500,
