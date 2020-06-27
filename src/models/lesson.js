@@ -6,11 +6,11 @@ const lessonSchema = new Schema({
     type: String,
     required: true,
   },
-  group: {
+  groups: [{
     type: mongoose.Types.ObjectId,
     required: true,
     ref: 'Group'
-  },
+  }],
   room: {
     type: Number,
     required: true,
