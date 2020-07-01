@@ -15,7 +15,7 @@ exports.getAllTeachers = async (req, res) => {
     res.status(200).json({
       teachers,
       error: true,
-      status: 404,
+      status: 200,
     });
   } catch (error) {
     console.log(error);
