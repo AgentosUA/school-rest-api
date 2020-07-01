@@ -8,7 +8,7 @@ const { validationResult } = require('express-validator');
 exports.getAllLessons = async (req, res) => {
   try {
     const lessons = await Lesson.find();
-    if (!lessons) {
+    if (lessons.length < 1) {
       return res.status(404).json({
         error: 'No lessons found',
         status: 404,
