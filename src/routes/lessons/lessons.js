@@ -5,6 +5,6 @@ const lessonsController = require('../../controllers/lessons');
 
 router.get('/', lessonsController.getAllLessons);
 router.post('/', lessonsController.postNewLesson);
-router.delete('/', lessonsController.deleteLesson);
+router.delete('/:id', lessonsController.deleteLesson);
 
 module.exports = router;

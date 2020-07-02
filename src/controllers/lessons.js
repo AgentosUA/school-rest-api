@@ -81,7 +81,7 @@ exports.postNewLesson = async (req, res) => {
 };
 
 exports.deleteLesson = async (req, res) => {
-  const { id } = req.params.id;
+  const { id } = req.params;
   const validErrors = validationResult(req);
 
   if (!validErrors.isEmpty()) {
