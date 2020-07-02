@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Teacher = require('../models/teacher');
+const Lesson = require('../models/lesson');
 
 const { validationResult } = require('express-validator');
 
@@ -59,7 +60,6 @@ exports.postNewTeacher = async (req, res) => {
 };
 
 exports.deleteTeacher = async (req, res) => {
-  const { id } = req.body;
   const validErrors = validationResult(req);
 
   if (!validErrors.isEmpty()) {
@@ -69,6 +69,8 @@ exports.deleteTeacher = async (req, res) => {
     });
   }
 
+  const { id } = req.params;
+
   try {
     const teacher = await Teacher.findById(id);
     if (!teacher) {
@@ -77,7 +79,7 @@ exports.deleteTeacher = async (req, res) => {
         status: 404,
       });
     }
-
+    await Lesson.updateOne({ teacher: id }, { $pull: { teachers: id } });
     await teacher.remove();
     res.status(201).json({
       message: 'Teacher was deleted!',
