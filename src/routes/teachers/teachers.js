@@ -4,6 +4,7 @@ const { body } = require('express-validator');
 const teachersController = require('../../controllers/teachers');
 
 router.get('/', teachersController.getAllTeachers);
+router.get('/:id', teachersController.getTeacher);
 router.post('/', [body('name').notEmpty()],teachersController.postNewTeacher);
 router.delete('/:id', teachersController.deleteTeacher);
 
