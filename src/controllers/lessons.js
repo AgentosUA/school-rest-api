@@ -81,7 +81,7 @@ exports.postNewLesson = async (req, res) => {
 };
 
 exports.deleteLesson = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params.id;
   const validErrors = validationResult(req);
 
   if (!validErrors.isEmpty()) {
@@ -95,8 +95,8 @@ exports.deleteLesson = async (req, res) => {
     const lesson = await Lesson.findById(id);
     const sess = await mongoose.startSession();
     sess.startTransaction();
-
     await Group.updateMany({}, { $pull: { lessons: id } });
+    await Teacher.updateMany({}, { $pull: { lessons: id } });
 
     if (!lesson) {
       return res.status(404).json({
@@ -105,7 +105,8 @@ exports.deleteLesson = async (req, res) => {
       });
     }
 
-    await lesson.remove();
+    await lesson.remove({ session: sess });
+    await sess.commitTransaction();
     res.status(201).json({
       message: 'Lesson was deleted!',
       error: false,
