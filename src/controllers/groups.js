@@ -3,6 +3,29 @@ const Group = require('../models/group');
 
 const { validationResult } = require('express-validator');
 
+exports.getGroup = async (req, res) => {
+  try {
+    const group = await Group.findById(mongoose.Types.ObjectId(req.params.id));
+    if (!group) {
+      return res.status(404).json({
+        error: 'Group not found',
+        status: 404,
+      });
+    }
+    res.status(200).json({
+      group,
+      error: false,
+      status: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: 'Something went wrong on the server!',
+      status: 500,
+    });
+  }
+};
+
 exports.getAllGroups = async (req, res) => {
   try {
     const groups = await Group.find();
