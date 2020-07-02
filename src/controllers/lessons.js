@@ -5,6 +5,31 @@ const Teacher = require('../models/teacher');
 
 const { validationResult } = require('express-validator');
 
+exports.getLesson = async (req, res) => {
+  try {
+    const lesson = await Lesson.findById(
+      mongoose.Types.ObjectId(req.params.id)
+    );
+    if (!lesson) {
+      return res.status(404).json({
+        error: 'Lesson not found',
+        status: 404,
+      });
+    }
+    res.status(200).json({
+      lesson,
+      error: false,
+      status: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: 'Something went wrong on the server!',
+      status: 500,
+    });
+  }
+};
+
 exports.getAllLessons = async (req, res) => {
   try {
     const lessons = await Lesson.find();
@@ -94,9 +119,9 @@ exports.patchLesson = async (req, res) => {
 
   try {
     const lesson = await Lesson.findById(id);
-    title ? lesson.title = title : null;
-    room ? lesson.room = room : null;
-    time ? lesson.time = time : null;
+    title ? (lesson.title = title) : null;
+    room ? (lesson.room = room) : null;
+    time ? (lesson.time = time) : null;
     await lesson.save();
     res.status(200).json({
       message: 'Lesson updated successfully!',
