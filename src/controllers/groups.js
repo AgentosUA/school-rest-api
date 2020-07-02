@@ -88,6 +88,36 @@ exports.postNewGroup = async (req, res) => {
   }
 };
 
+exports.patchGroup = async (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+  const validErrors = validationResult(req);
+
+  if (!validErrors.isEmpty()) {
+    return res.status(400).json({
+      error: 'Some fields are empty!',
+      status: 400,
+    });
+  }
+
+  try {
+    const group = await Group.findById(id);
+    title ? (group.title = title) : null;
+    await group.save();
+    res.status(200).json({
+      message: 'Group updated successfully!',
+      error: false,
+      status: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: 'Something went wront on the server!',
+      status: 500,
+    });
+  }
+};
+
 exports.deleteGroup = async (req, res) => {
   const { id } = req.body;
   const validErrors = validationResult(req);
