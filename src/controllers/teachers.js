@@ -29,6 +29,36 @@ exports.getTeacher = async (req, res) => {
   }
 };
 
+exports.patchTeacher = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const teacher = await Teacher.findById(
+      mongoose.Types.ObjectId(req.params.id)
+    );
+    if (!teacher) {
+      return res.status(404).json({
+        error: 'Teacher not found',
+        status: 404,
+      });
+    }
+
+    teacher.name = name;
+    await teacher.save();
+
+    res.status(200).json({
+      message: 'Teacher updated successfully',
+      error: false,
+      status: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: 'Something went wrong on the server!',
+      status: 500,
+    });
+  }
+};
+
 exports.getAllTeachers = async (req, res) => {
   try {
     const teachers = await Teacher.find();
