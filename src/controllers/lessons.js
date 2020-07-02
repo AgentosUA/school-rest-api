@@ -80,6 +80,38 @@ exports.postNewLesson = async (req, res) => {
   }
 };
 
+exports.patchLesson = async (req, res) => {
+  const { id } = req.params;
+  const { title, room, time } = req.body;
+  const validErrors = validationResult(req);
+
+  if (!validErrors.isEmpty()) {
+    return res.status(400).json({
+      error: 'Some fields are empty!',
+      status: 400,
+    });
+  }
+
+  try {
+    const lesson = await Lesson.findById(id);
+    title ? lesson.title = title : null;
+    room ? lesson.room = room : null;
+    time ? lesson.time = time : null;
+    await lesson.save();
+    res.status(200).json({
+      message: 'Lesson updated successfully!',
+      error: false,
+      status: 200,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: 'Something went wront on the server!',
+      status: 500,
+    });
+  }
+};
+
 exports.deleteLesson = async (req, res) => {
   const { id } = req.params;
   const validErrors = validationResult(req);
