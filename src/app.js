@@ -12,6 +12,8 @@ const teachersRoutes = require('./routes/teachers/teachers');
 const lessonsRoutes = require('./routes/lessons/lessons');
 const groupRoutes = require('./routes/groups/groups');
 const studentRoutes = require('./routes/students/students');
+const authRoutes = require('./routes/auth/auth');
+
 const errorRouter = require('./routes/index');
 
 // Configuration:
@@ -39,6 +41,7 @@ app.use('/teachers', teachersRoutes);
 app.use('/lessons', lessonsRoutes);
 app.use('/groups', groupRoutes);
 app.use('/students', studentRoutes);
+app.use('/auth', authRoutes);
 app.use('/', errorRouter.showError);
 
 // Server start:
