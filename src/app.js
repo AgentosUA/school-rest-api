@@ -11,6 +11,7 @@ const DBConnect = require('./db/db');
 const teachersRoutes = require('./routes/teachers/teachers');
 const lessonsRoutes = require('./routes/lessons/lessons');
 const groupRoutes = require('./routes/groups/groups');
+const studentRoutes = require('./routes/students/students');
 const errorRouter = require('./routes/index');
 
 // Configuration:
@@ -33,9 +34,11 @@ app.use((req, res, next) => {
 });
 
 // Routes:
+
 app.use('/teachers', teachersRoutes);
 app.use('/lessons', lessonsRoutes);
 app.use('/groups', groupRoutes);
+app.use('/students', studentRoutes);
 app.use('/', errorRouter.showError);
 
 // Server start:
@@ -46,7 +49,7 @@ if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_PASS) {
 }
 
 const startServer = async () => {
-  console.log('Connecting to MongoDB...')
+  console.log('Connecting to MongoDB...');
   await DBConnect();
   app.listen(process.env.PORT || 3000, () => {
     console.log(`Server started on port ${process.env.PORT}!`);
