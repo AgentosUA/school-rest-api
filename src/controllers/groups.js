@@ -119,7 +119,7 @@ exports.patchGroup = async (req, res) => {
 };
 
 exports.deleteGroup = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const validErrors = validationResult(req);
 
   if (!validErrors.isEmpty()) {
