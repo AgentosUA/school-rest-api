@@ -7,6 +7,6 @@ router.get('/', groupController.getAllGroups);
 router.get('/:id', groupController.getGroup);
 router.post('/', groupController.postNewGroup);
 router.patch('/:id', groupController.patchGroup);
-router.delete('/', groupController.deleteGroup);
+router.delete('/:id', groupController.deleteGroup);
 
 module.exports = router;
